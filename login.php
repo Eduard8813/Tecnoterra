@@ -3,14 +3,16 @@ require_once 'database.php';
 
 if (isset($_POST['login'])) {
     $username = $_POST['username'];
-    $password = $_POST['password'];
-
+//  echo json_encode($_POST);
+//  return;
+       $password = $_POST['password'];
+    
     // Validate input
     if (empty($username) || empty($password)) {
-        echo "Please fill in all fields";
+        echo json_encode( ["Respuesta"=> "Please fill in all fields"]);
         exit;
     }
-      //echo conn; 
+
     // Query database
     $query = "SELECT * FROM users WHERE username = '$username'";
     $result = $conn->query($query);
@@ -20,12 +22,15 @@ if (isset($_POST['login'])) {
             // Login successful, start session
             session_start();
             $_SESSION['username'] = $username;
-            echo "Login successful";
+            echo json_encode(["Respuesta" => "Login successful"]);
+            return;
         } else {
-            echo "Invalid password";
+            echo json_encode(["Respuesta" => "Invalid password"]);
+            return;
         }
     } else {
-        echo "Username not found";
+        echo json_encode(["Respuesta" => "Username not found"]);
+        return;
     }
 
     if ($auth_success) {

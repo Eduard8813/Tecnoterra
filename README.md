@@ -1,2 +1,2 @@
-# Tecnoterra
- Aplicacion web para el monitoreo de cultivo
+# inicio
+ Se realizo el inicio de sesion y la visualizacion de la lectura de los sensores
