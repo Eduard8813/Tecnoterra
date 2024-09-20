@@ -45,7 +45,7 @@
                 <div id="register-password-invalid-error" class="hidden text-red-500 text-sm">La contraseña debe tener al menos
                     8 caracteres.</div>
             </div>
-            <button class="btn" onclick="registerUser()">Registrarse</button>
+            <button class="btn" onclick="registerUser()">Crear usuario</button>
             <i id="back-arrow" class="fas fa-arrow-left" onclick="toggleForms()">Atrás</i>
         </div>
 
@@ -68,6 +68,7 @@
         </div>
 
         <script>
+            let isLoginForm = true;
             // Función para togglear entre los formularios de inicio de sesión y registro
             function toggleForms() {
                 const loginForm = document.getElementById('login-form');
@@ -87,6 +88,7 @@
                     registerLink.classList.add('hidden');
                     backArrow.classList.remove('hidden');
                 }
+
             }
 
             // Función para validar campos vacíos en el formulario de inicio de sesión
@@ -97,7 +99,8 @@
                 if (usernameInput.value.trim() === '' || passwordInput.value.trim() === '') {
                     alert('Por favor, ingresa ambos campos');
                     return false;
-                }
+                } 
+                else{
                 const formData = new FormData();
                 formData.append('username', usernameInput.value);
                 formData.append('password', passwordInput.value);
@@ -115,19 +118,18 @@
                         console.log(data)
                         
                         if (data.Respuesta) {
-                            window.location.href = 'sensores.php';
+                            window.location.href = 'datos.php';
                         } else {
                             alert('Credenciales incorrectas');
                         }
                     })
                     .catch(error => console.error(error));
-
-                return true;
-
-
+                               return true;
+               }
 
             }
 
+                
             // Función para validar campos vacíos en el formulario de registro
             function validateRegisterForm() {
                 const usernameInput = document.getElementById('register-usuario');
@@ -139,35 +141,10 @@
                     alert('Por favor, ingresa todos los campos');
                     return false;
                 } else {
-                    // Redirigir a la otra página si los campos están llenos
-                    const formData = new FormData();
-                    formData.append('username', usernameInput.value);
-                    formData.append('password', passwordInput.value);
-
-                    fetch('login.php', {
-                            method: 'POST',
-                            body: formData
-                        })
-                        .then(response => response.text())
-                        .then(data => {
-                            if (data === 'success') {
-                                window.location.href = 'nueva_pagina.html';
-                            } else {
-                                alert('Credenciales incorrectas');
-                            }
-                        })
-                        .catch(error => console.error(error));
-
-                    return true;
-                }
+                     return true;
             }
-
-            document.querySelector('.btn').addEventListener('click', (e) => {
-                e.preventDefault();
-                if (!validateLoginForm()) {
-                    return;
-                }
-            });
+        }
+           
             // Función para registrar un nuevo usuario
             async function registerUser() {
                 // Obtener los valores de los campos del formulario de registro
@@ -210,29 +187,48 @@
                             body: formData
                         })
                         .then(response => response.json())
-                        .then(data => console.log(data))
+                        .then(data => {
+                        console.log(data)
+                        if (data.Respuesta) {
+                            toggleForms();
+                        }
+                    })
                         .catch(error => console.error(error));
                 }
             }
-
             // Agregar eventos a los botones de inicio de sesión y registro
             document.getElementById('register-link').addEventListener('click', () => {
+                    isLoginForm = false;
                 toggleForms();
+            });
+            
+            document.getElementById('login-link').addEventListener('click', () => {
+             isLoginForm = true;
+             validateLoginForm();
             });
 
             document.getElementById('back-arrow').addEventListener('click', toggleForms);
 
             // Agregar evento al botón de inicio de sesión
             document.querySelector('.btn').addEventListener('click', (e) => {
-                e.preventDefault();
-                validateLoginForm();
-            });
-
+                   e.preventDefault();
+                  if (isLoginForm) {
+        // Estoy en el formulario de login
+                   validateLoginForm();
+                 } else {
+        // Estoy en el formulario de registro
+                    toggleForms();
+    }
+       });
             // Agregar evento al botón de registro
             document.getElementById('register-form').addEventListener('submit', (e) => {
                 e.preventDefault();
                 registerUser();
             });
+
+            document.getElementById('register-btn').addEventListener('click', () => {
+             validateLoginForm();
+});
         </script>
 </body>
 

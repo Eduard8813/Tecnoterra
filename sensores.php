@@ -1,362 +1,575 @@
-<html lang="es">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Monitoreo de Cultivos</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <style>
-        body {
-            background-color: #e0f7fa;
-            /* Azul claro */
-            font-family: Arial, sans-serif;
+<html>
+ <head>
+  <title>
+   TecnoTerra
+  </title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&amp;display=swap" rel="stylesheet"/>
+  <style>
+   body {
+            font-family: 'Nunito', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
         }
-
         .header {
-            background-color: #388e3c;
-            /* Verde */
+            background-color: white;
+            padding: 10px 0;
+            text-align: center;
+            position: relative;
+        }
+        .header img {
+            height: 150px;
+        }
+        .nav {
+            background-color: #3b9e3b;
+            padding: 10px 0;
+            display: flex;
+            justify-content: space-around;
+            border-radius: 0 0 20px 20px;
+            display: none; 
+        }
+        .nav a {
             color: white;
-            padding: 16px;
+            text-decoration: none;
+            margin: 0 20px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        .menu-icon {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            font-size: 24px;
+            color: #3b9e3b;
+            cursor: pointer;
+        }
+        .content {
+            padding: 20px;
+            display: none;
+        }
+        .content.active {
+            display: block;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            justify-content: center;
+            padding: 20px;
+        }
+        .card {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            transition: transform 0.2s;
+        }
+        .card:hover {
+            transform: scale(1.05);
+        }
+        .card h3 {
+            font-size: 1.4em;
+            color: #0000FF; /* Blue color for field names */
+            margin: 0 0 15px 0;
+        }
+        .card .info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .card .info i {
+            margin-right: 10px;
+        }
+        .card .info span {
+            font-size: 1em;
+            color: #2c3e50; /* Darker color for variables */
+        }
+        .card .yield {
+            font-size: 1.8em;
+            color: #2c3e50; /* Darker color for yield */
+            margin-left: auto;
+        }
+        .card .yield-label {
+            font-size: 1.1em;
+            color: #2c3e50; /* Darker color for yield label */
+            margin-left: 5px;
+        }
+        .info-container {
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-
-        .container {
-            padding: 16px;
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-
-        .card {
-            background-color: #d7ccc8;
-            /* Marrón claro */
-            padding: 16px;
-            border-radius: 8px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-            margin-bottom: 16px;
-            /* Ensure space between cards */
-        }
-
-        .card h2 {
-            font-size: 1.125rem;
-            font-weight: bold;
-        }
-
-        .card .details {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.875rem;
-            color: #4b5563;
-        }
-
-        .card .details i {
-            color: #10b981;
-        }
-
-        .card .details .temp {
-            color: #3b82f6;
-        }
-
-        .card .details .humidity {
-            color: #60a5fa;
-        }
-
-        .card .yield {
-            font-size: 1.5rem;
-            font-weight: bold;
-            margin-top: 8px;
-        }
-
-        .card .yield-label {
-            font-size: 0.875rem;
-            color: #6b7280;
-        }
-
-        .menu {
-            display: none;
-            flex-direction: column;
-            gap: 8px;
-            background-color: #d7ccc8;
-            /* Marrón claro */
-            padding: 16px;
-            border-radius: 8px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-        }
-
-        .menu a {
-            color: #388e3c;
-            /* Verde */
-            font-size: 1rem;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        .content {
-            display: none;
-            background-color: #d7ccc8;
-            /* Marrón claro */
-            padding: 16px;
-            border-radius: 8px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-        }
-
-        .content p {
-            font-size: 1rem;
-            color: #374151;
-        }
-
-        .content button {
-            background-color: #388e3c;
-            /* Verde */
-            color: white;
-            padding: 8px;
-            border-radius: 8px;
-            border: none;
-            cursor: pointer;
-            margin-top: 16px;
-        }
-
-        .chat-container {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            margin-top: 16px;
-        }
-
-        .chat-box {
-            background-color: #fff;
-            padding: 8px;
-            border-radius: 8px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-            max-height: 300px;
-            overflow-y: auto;
-        }
-
-        .chat-input {
-            display: flex;
-            gap: 8px;
-        }
-
-        .chat-input input {
-            flex: 1;
-            padding: 8px;
-            border: 1px solid #d1d5db;
-            border-radius: 8px;
-        }
-
-        .chat-input button {
-            padding: 8px;
-            background-color: #388e3c;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-        }
-
-        .message {
-            margin-bottom: 8px;
-        }
-
-        .message.user {
+        .details {
             text-align: right;
+            margin-top: 10px;
+        }
+        .details a {
+            text-decoration: none;
+            color: #3498db;
+            font-size: 1.1em;
+        }
+        .green {
+            color: green;
+        }
+        .yellow {
+            color: yellow;
+        }
+        .red {
+            color: red;
+        }
+        @media (min-width: 768px) {
+            .container {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        .footer-container {
+            width: 100%;
+            max-width: 1350px;
+            background-color: #3b2314;
+            padding: 20px;
+            box-sizing: border-box;
+            margin-top: 20px;
+        }
+        .footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background-color: #3b2314;
+            border: 0px solid #ffffff;
+        }
+        .footer .logo img {
+            height: 150px;
+        }
+        .footer .contact, .footer .links {
+            text-align: center;
+        }
+        .footer .contact h3, .footer .links h3 {
+            margin-bottom: 10px;
+            font-size: 18px;
+            color: #ffffff;
+        }
+        .footer .contact p, .footer .links p {
+            margin: 5px 0;
+            font-size: 16px;
+            color: #ffffff;
+        }
+        .footer .contact p i, .footer .links p i {
+            margin-right: 10px;
+            color: #4caf50;
+        }
+  </style>
+ </head>
+ <body>
+  <div class="header">
+   <img alt="TecnoTerra Logo" height="50" src="nombre.png" width="250"/>
+   <i class="fas fa-bars menu-icon" onclick="toggleMenu()">
+   </i>
+  </div>
+  <div class="nav" id="navMenu">
+   <a href="nosotros.html">
+    Nosotros
+   </a>
+   <a href="usuario.html">
+    Usuario
+   </a>
+   <a href="chatbot.html">
+    Chat Bot
+   </a>
+   <a href="manual.html">
+    Manual de uso
+   </a>
+  </div>
+  <div class="content" id="nosotros">
+   <h2>
+    Nosotros
+   </h2>
+   <p>
+    Bienvenidos a TecnoTerra. Somos una empresa dedicada a la tecnología y el medio ambiente.
+   </p>
+  </div>
+  <div class="content" id="usuario">
+   <h2>
+    Usuario
+   </h2>
+   <p>
+    Información del usuario.
+   </p>
+  </div>
+  <div class="content" id="manual">
+   <h2>
+    Manual de uso
+   </h2>
+   <p>
+    Aquí encontrarás el manual de uso de nuestros productos.
+   </p>
+  </div>
+  <div class="container">
+   <div class="card" id="card1">
+    <h3>
+     Campo de arroz
+    </h3>
+    <div class="info-container">
+     <div>
+      <div class="info">
+       <i class="fas fa-leaf">
+       </i>
+       <span class="status">
+        Saludable
+       </span>
+      </div>
+      <div class="info">
+       <i class="fas fa-thermometer-half">
+       </i>
+       <span class="temperature">
+        26°C
+       </span>
+      </div>
+      <div class="info">
+       <i class="fas fa-tint">
+       </i>
+       <span class="humidity">
+        76% Humedad
+       </span>
+      </div>
+     </div>
+     <div>
+      <div class="yield">
+       8.2 t/ha
+      </div>
+      <div class="yield-label">
+       rendimiento
+      </div>
+     </div>
+    </div>
+    <div class="details">
+     <a href="#">
+      Detalles
+     </a>
+    </div>
+   </div>
+   <div class="card" id="card2">
+    <h3>
+     Campo de frijol
+    </h3>
+    <div class="info-container">
+     <div>
+      <div class="info">
+       <i class="fas fa-leaf">
+       </i>
+       <span class="status">
+        Moderado
+       </span>
+      </div>
+      <div class="info">
+       <i class="fas fa-thermometer-half">
+       </i>
+       <span class="temperature">
+        22°C
+       </span>
+      </div>
+      <div class="info">
+       <i class="fas fa-tint">
+       </i>
+       <span class="humidity">
+        60% Humedad
+       </span>
+      </div>
+     </div>
+     <div>
+      <div class="yield">
+       5.1 t/ha
+      </div>
+      <div class="yield-label">
+       rendimiento
+      </div>
+     </div>
+    </div>
+    <div class="details">
+     <a href="#">
+      Detalles
+     </a>
+    </div>
+   </div>
+   <div class="card" id="card3">
+    <h3>
+     Campo de maíz
+    </h3>
+    <div class="info-container">
+     <div>
+      <div class="info">
+       <i class="fas fa-leaf">
+       </i>
+       <span class="status">
+        Pobre
+       </span>
+      </div>
+      <div class="info">
+       <i class="fas fa-thermometer-half">
+       </i>
+       <span class="temperature">
+        29°C
+       </span>
+      </div>
+      <div class="info">
+       <i class="fas fa-tint">
+       </i>
+       <span class="humidity">
+        40% Humedad
+       </span>
+      </div>
+     </div>
+     <div>
+      <div class="yield">
+       2.9 t/ha
+      </div>
+      <div class="yield-label">
+       rendimiento
+      </div>
+     </div>
+    </div>
+    <div class="details">
+     <a href="#">
+      Detalles
+     </a>
+    </div>
+   </div>
+   <div class="card" id="card4">
+    <h3>
+     Campo de sorgo
+    </h3>
+    <div class="info-container">
+     <div>
+      <div class="info">
+       <i class="fas fa-leaf">
+       </i>
+       <span class="status">
+        Saludable
+       </span>
+      </div>
+      <div class="info">
+       <i class="fas fa-thermometer-half">
+       </i>
+       <span class="temperature">
+        25°C
+       </span>
+      </div>
+      <div class="info">
+       <i class="fas fa-tint">
+       </i>
+       <span class="humidity">
+        71% Humedad
+       </span>
+      </div>
+     </div>
+     <div>
+      <div class="yield">
+       7.5 t/ha
+      </div>
+      <div class="yield-label">
+       rendimiento
+      </div>
+     </div>
+    </div>
+    <div class="details">
+     <a href="#">
+      Detalles
+     </a>
+    </div>
+   </div>
+   <div class="card" id="card5">
+    <h3>
+     Campo de trigo
+    </h3>
+    <div class="info-container">
+     <div>
+      <div class="info">
+       <i class="fas fa-leaf">
+       </i>
+       <span class="status">
+        Bueno
+       </span>
+      </div>
+      <div class="info">
+       <i class="fas fa-thermometer-half">
+       </i>
+       <span class="temperature">
+        24°C
+       </span>
+      </div>
+      <div class="info">
+       <i class="fas fa-tint">
+       </i>
+       <span class="humidity">
+        65% Humedad
+       </span>
+      </div>
+     </div>
+     <div>
+      <div class="yield">
+       6.8 t/ha
+      </div>
+      <div class="yield-label">
+       rendimiento
+      </div>
+     </div>
+    </div>
+    <div class="details">
+     <a href="#">
+      Detalles
+     </a>
+    </div>
+   </div>
+   <div class="card" id="card6">
+    <h3>
+     Campo de cebada
+    </h3>
+    <div class="info-container">
+     <div>
+      <div class="info">
+       <i class="fas fa-leaf">
+       </i>
+       <span class="status">
+        Regular
+       </span>
+      </div>
+      <div class="info">
+       <i class="fas fa-thermometer-half">
+       </i>
+       <span class="temperature">
+        27°C
+       </span>
+      </div>
+      <div class="info">
+       <i class="fas fa-tint">
+       </i>
+       <span class="humidity">
+        55% Humedad
+       </span>
+      </div>
+     </div>
+     <div>
+      <div class="yield">
+       4.3 t/ha
+      </div>
+      <div class="yield-label">
+       rendimiento
+      </div>
+     </div>
+    </div>
+    <div class="details">
+     <a href="#">
+      Detalles
+     </a>
+    </div>
+   </div>
+  </div>
+  <div class="footer-container">
+   <div class="footer">
+    <div class="logo">
+     <img alt="TecnoTerra Logo" src="nombre.png" />
+    </div>
+    <div class="contact">
+     <h3>
+      Contacto
+     </h3>
+     <p>
+      <i class="fas fa-phone">
+      </i>
+      0000 - 0000
+     </p>
+     <p>
+      <i class="fas fa-envelope">
+      </i>
+      gmailfalso@gmail.com
+     </p>
+    </div>
+    <div class="links">
+     <h3>
+      Enlaces
+     </h3>
+     <p>
+      <a href="chatbot.html" style="color: #ffffff; text-decoration: none;">
+       Chat Bot
+      </a>
+     </p>
+     <p>
+      Nosotros
+     </p>
+    </div>
+   </div>
+  </div>
+  <script>
+   function toggleMenu() {
+            var navMenu = document.getElementById('navMenu');
+            if (navMenu.style.display === 'none' || navMenu.style.display === '') {
+                navMenu.style.display = 'flex';
+            } else {
+                navMenu.style.display = 'none';
+            }
         }
 
-        .message.bot {
-            text-align: left;
-        }
-    </style>
-</head>
-
-<body>
-    <div class="header">
-        <h1>Monitoreo de Cultivos</h1>
-        <i class="fas fa-bars" onclick="toggleMenu()"></i>
-    </div>
-    <div class="menu" id="menu">
-        <a onclick="showContent('perfil')">Perfil</a>
-        <a onclick="showContent('instrucciones')">Instrucciones</a>
-        <a onclick="showContent('quienes-somos')">Quiénes Somos</a>
-    </div>
-    <div class="container" id="main-content">
-        <div class="card">
-            <h2>Campo de Arroz</h2>
-            <div class="details">
-                <i class="fas fa-leaf"></i>
-                <span>Saludable</span>
-                <i class="fas fa-thermometer-half temp"></i>
-                <span id="temp-arroz">25°C</span>
-                <i class="fas fa-tint humidity"></i>
-                <span id="humedad-arroz">75% Humedad</span>
-            </div>
-            <div class="yield">8.2 t/ha</div>
-            <div class="yield-label">Rendimiento</div>
-        </div>
-        <div class="card">
-            <h2>Campo de Maíz</h2>
-            <div class="details">
-                <i class="fas fa-leaf" style="color: #fbbf24;"></i>
-                <span>Moderado</span>
-                <i class="fas fa-thermometer-half temp"></i>
-                <span id="temp-maiz">28°C</span>
-                <i class="fas fa-tint humidity"></i>
-                <span id="humedad-maiz">65% Humedad</span>
-            </div>
-            <div class="yield">2.9 t/ha</div>
-            <div class="yield-label">Rendimiento</div>
-        </div>
-        <div class="card">
-            <h2>Campo de Frijol</h2>
-            <div class="details">
-                <i class="fas fa-leaf" style="color: #ef4444;"></i>
-                <span>Pobre</span>
-                <i class="fas fa-thermometer-half temp"></i>
-                <span id="temp-frijol">22°C</span>
-                <i class="fas fa-tint humidity"></i>
-                <span id="humedad-frijol">80% Humedad</span>
-            </div>
-            <div class="yield">5.1 t/ha</div>
-            <div class="yield-label">Rendimiento</div>
-        </div>
-        <div class="card">
-            <h2>Campo de Sorgo</h2>
-            <div class="details">
-                <i class="fas fa-leaf"></i>
-                <span>Saludable</span>
-                <i class="fas fa-thermometer-half temp"></i>
-                <span id="temp-sorgo">26°C</span>
-                <i class="fas fa-tint humidity"></i>
-                <span id="humedad-sorgo">70% Humedad</span>
-            </div>
-            <div class="yield">6.5 t/ha</div>
-            <div class="yield-label">Rendimiento</div>
-        </div>
-        <div class="card">
-            <h2>Campo de Café</h2>
-            <div class="details">
-                <i class="fas fa-leaf" style="color: #fbbf24;"></i>
-                <span>Moderado</span>
-                <i class="fas fa-thermometer-half temp"></i>
-                <span id="temp-cafe">24°C</span>
-                <i class="fas fa-tint humidity"></i>
-                <span id="humedad-cafe">60% Humedad</span>
-            </div>
-            <div class="yield">3.2 t/ha</div>
-            <div class="yield-label">Rendimiento</div>
-        </div>
-        <div class="card">
-            <h2>Campo de Cacao</h2>
-            <div class="details">
-                <i class="fas fa-leaf" style="color: #ef4444;"></i>
-                <span>Pobre</span>
-                <i class="fas fa-thermometer-half temp"></i>
-                <span id="temp-cacao">27°C</span>
-                <i class="fas fa-tint humidity"></i>
-                <span id="humedad-cacao">85% Humedad</span>
-            </div>
-            <div class="yield">4.8 t/ha</div>
-            <div class="yield-label">Rendimiento</div>
-        </div>
-    </div>
-    <div class="content" id="perfil">
-        <p>Esta es la sección de perfil...</p>
-        <button onclick="hideContent()">Volver</button>
-    </div>
-    <div class="content" id="instrucciones">
-        <p>Estas son las instrucciones para el uso de la aplicación de monitoreo de cultivos...</p>
-        <div class="chat-container">
-            <div class="chat-box" id="chat-box">
-                <!-- Chat messages will appear here -->
-            </div>
-            <div class="chat-input">
-                <input type="text" id="chat-input" placeholder="Escribe tu pregunta...">
-                <button onclick="sendMessage()">Enviar</button>
-            </div>
-        </div>
-        <button onclick="hideContent()">Volver</button>
-    </div>
-    <div class="content" id="quienes-somos">
-        <p>Somos un equipo dedicado a mejorar la eficiencia y productividad de los cultivos a través de la tecnología...
-        </p>
-        <button onclick="hideContent()">Volver</button>
-    </div>
-    <script>
-        function toggleMenu() {
-            const menu = document.getElementById('menu');
-            const mainContent = document.getElementById('main-content');
-            const contents = document.querySelectorAll('.content');
-            menu.style.display = menu.style.display === 'none' || menu.style.display === '' ? 'flex' : 'none';
-            mainContent.style.display = 'none';
-            contents.forEach(content => content.style.display = 'none');
+        function showContent(section) {
+            var contents = document.getElementsByClassName('content');
+            for (var i = 0; i < contents.length; i++) {
+                contents[i].style.display = 'none';
+            }
+            document.getElementById(section).style.display = 'block';
         }
 
-        function showContent(contentId) {
-            document.getElementById('menu').style.display = 'none';
-            document.getElementById(contentId).style.display = 'block';
-        }
-
-        function hideContent() {
-            document.getElementById('main-content').style.display = 'flex';
-            document.querySelectorAll('.content').forEach(content => content.style.display = 'none');
-        }
-
-        function getRandomInt(min, max) {
+        function getRandomValue(min, max) {
             return Math.floor(Math.random() * (max - min + 1)) + min;
         }
 
-        function updateReadings() {
-            document.getElementById('temp-arroz').innerText = `${getRandomInt(24, 26)}°C`;
-            document.getElementById('humedad-arroz').innerText = `${getRandomInt(74, 76)}% Humedad`;
-            document.getElementById('temp-maiz').innerText = `${getRandomInt(27, 29)}°C`;
-            document.getElementById('humedad-maiz').innerText = `${getRandomInt(64, 66)}% Humedad`;
-            document.getElementById('temp-frijol').innerText = `${getRandomInt(21, 23)}°C`;
-            document.getElementById('humedad-frijol').innerText = `${getRandomInt(79, 81)}% Humedad`;
-            document.getElementById('temp-sorgo').innerText = `${getRandomInt(25, 27)}°C`;
-            document.getElementById('humedad-sorgo').innerText = `${getRandomInt(69, 71)}% Humedad`;
-            document.getElementById('temp-cafe').innerText = `${getRandomInt(23, 25)}°C`;
-            document.getElementById('humedad-cafe').innerText = `${getRandomInt(59, 61)}% Humedad`;
-            document.getElementById('temp-cacao').innerText = `${getRandomInt(26, 28)}°C`;
-            document.getElementById('humedad-cacao').innerText = `${getRandomInt(84, 86)}% Humedad`;
-        }
+        function updateCard(cardId) {
+            const card = document.getElementById(cardId);
+            const status = card.querySelector('.status');
+            const temperature = card.querySelector('.temperature');
+            const humidity = card.querySelector('.humidity');
+            const yieldElement = card.querySelector('.yield');
+            const leafIcon = card.querySelector('.fa-leaf');
+            const thermometerIcon = card.querySelector('.fa-thermometer-half');
+            const tintIcon = card.querySelector('.fa-tint');
 
-        setInterval(updateReadings, 5000);
-        updateReadings();
+            const randomTemperature = getRandomValue(20, 30);
+            const randomHumidity = getRandomValue(40, 80);
+            const randomYield = (Math.random() * (10 - 2) + 2).toFixed(1);
 
-        function sendMessage() {
-            const input = document.getElementById('chat-input');
-            const message = input.value.trim();
-            if (message) {
-                addMessage('user', message);
-                getBotResponse(message);
-                input.value = '';
-            }
-        }
+            temperature.textContent = `${randomTemperature}°C`;
+            humidity.textContent = `${randomHumidity}% Humedad`;
+            yieldElement.textContent = `${randomYield} t/ha`;
 
-        function addMessage(sender, message) {
-            const chatBox = document.getElementById('chat-box');
-            const messageElement = document.createElement('div');
-            messageElement.classList.add('message', sender);
-            messageElement.innerText = message;
-            chatBox.appendChild(messageElement);
-            chatBox.scrollTop = chatBox.scrollHeight;
-        }
+            let statusText = '';
+            let colorClass = '';
 
-        function getBotResponse(message) {
-            let response = '';
-            if (message.toLowerCase().includes('hola')) {
-                response = '¡Hola! ¿En qué puedo ayudarte?';
-            } else if (message.toLowerCase().includes('rendimiento')) {
-                response = 'El rendimiento de los cultivos se mide en toneladas por hectárea (t/ha).';
-            } else if (message.toLowerCase().includes('temperatura')) {
-                response = 'La temperatura ideal para el cultivo de arroz es entre 24°C y 26°C.';
+            if (randomTemperature >= 24 && randomTemperature <= 28 && randomHumidity >= 60 && randomHumidity <= 80) {
+                statusText = 'Saludable';
+                colorClass = 'green';
+            } else if ((randomTemperature >= 22 && randomTemperature < 24) || (randomTemperature > 28 && randomTemperature <= 30) || (randomHumidity >= 50 && randomHumidity < 60) || (randomHumidity > 80 && randomHumidity <= 85)) {
+                statusText = 'Moderado';
+                colorClass = 'yellow';
             } else {
-                response = 'Lo siento, no entiendo tu pregunta. Por favor, intenta de nuevo.';
+                statusText = 'Pobre';
+                colorClass = 'red';
             }
-            addMessage('bot', response);
-        }
-    </script>
-</body>
 
+            status.textContent = statusText;
+            leafIcon.className = `fas fa-leaf ${colorClass}`;
+            thermometerIcon.className = `fas fa-thermometer-half ${colorClass}`;
+            tintIcon.className = `fas fa-tint ${colorClass}`;
+        }
+
+        function updateAllCards() {
+            updateCard('card1');
+            updateCard('card2');
+            updateCard('card3');
+            updateCard('card4');
+            updateCard('card5');
+            updateCard('card6');
+        }
+
+        setInterval(updateAllCards, 3000);
+  </script>
+ </body>
 </html>
