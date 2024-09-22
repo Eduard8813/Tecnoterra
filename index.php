@@ -118,7 +118,7 @@
                         console.log(data)
                         
                         if (data.Respuesta) {
-                            window.location.href = 'datos.php';
+                            window.location.href = 'consultadedatos.php';
                         } else {
                             alert('Credenciales incorrectas');
                         }
@@ -189,9 +189,10 @@
                         .then(response => response.json())
                         .then(data => {
                         console.log(data)
-                        if (data.Respuesta) {
-                            toggleForms();
-                        }
+                        if (data.Respuesta === 'Registration successful') {
+                            toggleForms(); 
+                         document.querySelectorAll('input').forEach(input => input.value = '');
+                     }
                     })
                         .catch(error => console.error(error));
                 }
