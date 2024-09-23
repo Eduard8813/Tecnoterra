@@ -37,7 +37,12 @@
                      <input type="tel" placeholder="Número de teléfono" id="register-phone">
                      <div id="register-phone-error" class="hidden text-red-500 text-sm">El número de teléfono es obligatorio.</div>
                 </div>
-
+            
+                <div class="input-group">
+                   <i class="fas fa-seedling"></i>
+                   <input type="text" placeholder="Nombre del cultivo" id="register-cultivo">
+                   <div id="register-cultivo-error" class="hidden text-red-500 text-sm">El nombre del cultivo es obligatorio.</div>
+                </div>
             <div class="input-group">
                 <i class="fas fa-lock"></i>
                 <input type="password" placeholder="Contraseña" id="register-password">
@@ -117,7 +122,7 @@
 
                         console.log(data)
                         
-                        if (data.Respuesta) {
+                        if (data.Respuesta === 'Login successful') {
                             window.location.href = 'consultadedatos.php';
                         } else {
                             alert('Credenciales incorrectas');
@@ -136,8 +141,9 @@
                 const emailInput = document.getElementById('register-email');
                 const passwordInput = document.getElementById('register-password');
                 const phoneInput = document.getElementById('register-phone');
+                const cultivoInput =document.getElementById('register-cultivo');
 
-                if (usernameInput.value.trim() === '' || emailInput.value.trim() === '' || passwordInput.value.trim() === '' || phoneInput.value.trim() === '') {
+                if (usernameInput.value.trim() === '' || emailInput.value.trim() === '' || passwordInput.value.trim() === '' || phoneInput.value.trim() === '' || cultivoInput.value.trim() === '') {
                     alert('Por favor, ingresa todos los campos');
                     return false;
                 } else {
@@ -152,12 +158,14 @@
                 const emailInput = document.getElementById('register-email');
                 const passwordInput = document.getElementById('register-password');
                 const phoneInput = document.getElementById('register-phone');
+                const cultivoInput = document.getElementById('register-cultivo');
 
                 const formData = new FormData();
                 formData.append('username', usernameInput.value);
                 formData.append('email', emailInput.value);
                 formData.append('password', passwordInput.value);
                 formData.append('phone', phoneInput.value);
+                formData.append('cultivo', cultivoInput.value);
 
                 // Validar los campos del formulario de registro
                 if (validateRegisterForm()) {
@@ -166,6 +174,7 @@
                     console.log('Correo electrónico:', emailInput.value);
                     console.log('Contraseña:', passwordInput.value);
                     console.log('phone',phoneInput.value)
+                    console.log('Cultivo', cultivoInput.value);
 
                     //try {
                     //    const resp = await fetch('register.php', {

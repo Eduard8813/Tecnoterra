@@ -19,7 +19,7 @@
             position: relative;
         }
         .header img {
-            height: 50px;
+            height: 150px;
         }
         .header .menu-icon {
             position: absolute;
@@ -233,86 +233,239 @@
         }
   </style>
   <script>
-   function toggleMenu() {
-            var navBar = document.querySelector('.nav-bar');
-            if (navBar.style.display === 'none' || navBar.style.display === '') {
-                navBar.style.display = 'block';
-            } else {
-                navBar.style.display = 'none';
-            }
-        }
+// Función para toggle el menú
+function toggleMenu() {
+  var navBar = document.querySelector('.nav-bar');
+  if (navBar.style.display === 'none' || navBar.style.display === '') {
+    navBar.style.display = 'block';
+  } else {
+    navBar.style.display = 'none';
+  }
+}
 
-        function showUserContent() {
-            document.getElementById('location-content').classList.add('hidden');
-            document.getElementById('settings-content').classList.add('hidden');
-            document.getElementById('user-content').classList.remove('hidden');
-            setActiveIcon('user-icon');
-        }
+// Función para mostrar el contenido del usuario
+async function showUserContent() {
+  document.getElementById('location-content').classList.add('hidden');
+  document.getElementById('settings-content').classList.add('hidden');
+  document.getElementById('user-content').classList.remove('hidden');
+  setActiveIcon('user-icon');
 
-        function showLocationContent() {
-            document.getElementById('user-content').classList.add('hidden');
-            document.getElementById('settings-content').classList.add('hidden');
-            document.getElementById('location-content').classList.remove('hidden');
-            setActiveIcon('location-icon');
-        }
+  fetch('solicituddedatos.php', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (!data || typeof data !== 'object') {
+      // Manejar error: respuesta inválida
+      console.error('Error: respuesta inválida');
+      return;
+    }
+    if (data.error) {
+      // Manejar error: error en la respuesta
+      console.error('Error:', data.error);
+      return;
+    }
 
-        function showSettingsContent() {
-            document.getElementById('user-content').classList.add('hidden');
-            document.getElementById('location-content').classList.add('hidden');
-            document.getElementById('settings-content').classList.remove('hidden');
-            setActiveIcon('settings-icon');
-        }
+    // Verificar si el elemento existe antes de intentar establecer su valor
+    var usuarioElement = document.getElementById('usuario');
+    if (usuarioElement) {
+      usuarioElement.value = data.nombre;
+    } else {
+      console.error('Error: elemento no encontrado');
+    }
 
-        function setActiveIcon(iconId) {
-            var icons = document.querySelectorAll('.sidebar .icon');
-            icons.forEach(function(icon) {
-                icon.classList.remove('active');
-            });
-            document.getElementById(iconId).classList.add('active');
-        }
+    // Repetir el mismo proceso para los demás elementos
+    var correoElement = document.getElementById('correo');
+    if (correoElement) {
+      correoElement.value = data.correo;
+    } else {
+      console.error('Error: elemento no encontrado');
+    }
 
-        function changeLanguage(language) {
-            var elements = document.querySelectorAll('[data-lang]');
-            elements.forEach(function(element) {
-                element.textContent = element.getAttribute('data-lang-' + language);
-            });
-        }
+    var numeroElement = document.getElementById('numero');
+    if (numeroElement) {
+      numeroElement.value = data.telefono;
+    } else {
+      console.error('Error: elemento no encontrado');
+    }
 
-        function enableEditing(section) {
-            var inputs = document.querySelectorAll(`#${section} .form-group input`);
-            inputs.forEach(function(input) {
-                input.removeAttribute('disabled');
-            });
-            document.querySelector(`#${section} .edit-button`).classList.add('hidden');
-            document.querySelector(`#${section} .save-button`).classList.remove('hidden');
-        }
+    var direccionElement = document.getElementById('direccion');
+    if (direccionElement) {
+      direccionElement.value = data.direccion;
+    } else {
+      console.error('Error: elemento no encontrado');
+    }
 
-        function saveChanges(section) {
-            var inputs = document.querySelectorAll(`#${section} .form-group input`);
-            inputs.forEach(function(input) {
-                input.setAttribute('disabled', 'disabled');
-            });
-            document.querySelector(`#${section} .edit-button`).classList.remove('hidden');
-            document.querySelector(`#${section} .save-button`).classList.add('hidden');
-        }
+    document.getElementById('usuario').value = data.nombre;
+    document.getElementById('correo').value = data.correo;
+    document.getElementById('numero').value = data.telefono;
+    document.getElementById('cultivo').value = data.cultivos;
+    document.getElementById('direccion').value = data.direccion;
+    document.getElementById('cuidad').value = data.ciudad;
+    document.getElementById('region').value = data.region;
+    document.getElementById('area').value = data.tamaño_cultivo;
 
-        function previewProfilePic(event) {
-            var reader = new FileReader();
-            reader.onload = function() {
-                var output = document.getElementById('profile-pic');
-                output.style.backgroundImage = 'url(' + reader.result + ')';
-            };
-            reader.readAsDataURL(event.target.files[0]);
-        }
+    // Mostramos los datos del usuario en los campos de formulario
+    document.getElementById('usuario').disabled = false;
+    document.getElementById('correo').disabled = false;
+    document.getElementById('numero').disabled = false;
+    document.getElementById('cultivo').disabled = false;
+    document.getElementById('direccion').disabled = false;
+    document.getElementById('cuidad').disabled = false;
+    document.getElementById('region').disabled = false;
+    document.getElementById('area').disabled = false;
+  })
+  .catch(error => console.error('Error:', error));
+}
 
-        document.addEventListener('DOMContentLoaded', function() {
-            showUserContent();
-        });
+// Función para mostrar el contenido de la ubicación
+function showLocationContent() {
+  document.getElementById('user-content').classList.add('hidden');
+  document.getElementById('settings-content').classList.add('hidden');
+  document.getElementById('location-content').classList.remove('hidden');
+  setActiveIcon('location-icon');
+}
+
+// Función para mostrar el contenido de la configuración
+function showSettingsContent() {
+  document.getElementById('user-content').classList.add('hidden');
+  document.getElementById('location-content').classList.add('hidden');
+  document.getElementById('settings-content').classList.remove('hidden');
+  setActiveIcon('settings-icon');
+}
+
+// Función para establecer el icono activo
+function setActiveIcon(iconId) {
+  var icons = document.querySelectorAll('.sidebar .icon');
+  icons.forEach(function(icon) {
+    icon.classList.remove('active');
+  });
+  document.getElementById(iconId).classList.add('active');
+}
+
+// Función para cambiar el idioma
+function changeLanguage(language) {
+  var elements = document.querySelectorAll('[data-lang]');
+  elements.forEach(function(element) {
+    element.textContent = element.getAttribute('data-lang-' + language);
+  });
+}
+
+// Función para habilitar la edición
+function enableEditing(section) {
+  var inputs = document.querySelectorAll(`#${section} .form-group input`);
+  inputs.forEach(function(input) {
+    input.removeAttribute('disabled');
+  });
+  document.querySelector(`#${section} .edit-button`).classList.add('hidden');
+  document.querySelector(`#${section} .save-button`).classList.remove('hidden');
+}
+
+// Función para guardar los cambios
+async function saveChanges(section) {
+  document.querySelector(`#${section} .save-button`).classList.add('hidden');
+  document .querySelector(`#${section} .edit-button`).classList.remove('hidden');
+  var userId = document.getElementById('user-id').dataset.value;
+  var inputs = document.querySelectorAll(`#${section} .form-group input`);
+  var data = {
+    user_id: userId,
+    submit: true
+  };
+  inputs.forEach(function(input) {
+    data[input.id] = input.value;
+  });
+
+  // Enviar los datos al servidor
+  fetch('solicituddedatos.php', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.error) {
+      console.error('Error:', data.error);
+    } else {
+      console.log('Cambios guardados con éxito');
+    }
+  })
+  .catch(error => console.error('Error:', error));
+}
+
+// Función para mostrar la foto de perfil
+function showProfilePicture() {
+  var userIdElement = document.getElementById('user-id');
+  if (userIdElement) {
+    var userId = userIdElement.dataset.value;
+
+    fetch('solicituddedatos.php', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (!data || typeof data !== 'object') {
+        // Manejar error: respuesta inválida
+        console.error('Error: respuesta inválida');
+        return;
+      }
+      if (data.error) {
+        // Manejar error: error en la respuesta
+        console.error('Error:', data.error);
+        return;
+      }
+
+      // Mostrar la foto de perfil
+      var profilePictureUrl = data.profile_picture;
+      var profilePictureElement = document.getElementById('profile-picture');
+      if (profilePictureElement) {
+        profilePictureElement.src = profilePictureUrl;
+      } else {
+        console.error('Error: elemento no encontrado');
+      }
+    })
+    .catch(error => console.error('Error:', error));
+  } else {
+    console.error('Error: elemento no encontrado');
+  }
+}
+
+// Llamamos a la función para mostrar la foto de perfil cuando se carga el documento
+document.addEventListener('DOMContentLoaded', function() {
+  showProfilePicture();
+});
+
+// Función para cerrar la sesión
+function cerrarSesion() {
+  fetch('cerrarsesion.php?cerrar_sesion=true', {
+    method: 'POST'
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.error) {
+      console.error('Error:', data.error);
+    } else {
+      console.log('Sesión cerrada con éxito');
+      window.location.href = 'index.php'; 
+    }
+  })
+  .catch(error => console.error('Error:', error));
+}
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelector('.logout-button').addEventListener('click', cerrarSesion);
+});
   </script>
  </head>
  <body>
   <div class="header">
-   <img alt="TecnoTerra Logo" height="50" src="https://oaidalleapiprodscus.blob.core.windows.net/private/org-BVbpSZmLndA7MfHIxv2ahIKS/user-IBY8IaMXtVn7IVIdZeyvjx16/img-wC4SCc5XmxQQCmc4nCUBGETy.png?st=2024-09-22T00%3A17%3A04Z&amp;se=2024-09-22T02%3A17%3A04Z&amp;sp=r&amp;sv=2024-08-04&amp;sr=b&amp;rscd=inline&amp;rsct=image/png&amp;skoid=d505667d-d6c1-4a0a-bac7-5c84a87759f8&amp;sktid=a48cca56-e6da-484e-a814-9c849652bcb3&amp;skt=2024-09-21T23%3A37%3A22Z&amp;ske=2024-09-22T23%3A37%3A22Z&amp;sks=b&amp;skv=2024-08-04&amp;sig=fYLknwT61%2BstZGj16wvdy3odDISFn5/VTvMoPkC5/PY%3D" width="150"/>
+   <img alt="TecnoTerra Logo" height="50" src="nombre.png" width="250"/>
    <i class="fas fa-bars menu-icon" onclick="toggleMenu()">
    </i>
   </div>
@@ -320,7 +473,7 @@
    <a href="nosotros.html" data-lang data-lang-es="Nosotros" data-lang-en="About Us">
     Nosotros
    </a>
-   <a href="usuario.html" data-lang data-lang-es="Usuario" data-lang-en="User">
+   <a href="perfil.php" data-lang data-lang-es="Usuario" data-lang-en="User">
     Usuario
    </a>
    <a href="chatbot.html" data-lang data-lang-es="Chat Bot" data-lang-en="Chat Bot">
@@ -330,6 +483,7 @@
     Manual de uso
    </a>
   </div>
+  <div id="user-id" data-value="<?php echo $_SESSION['user_id']; ?>"></div>
   <div class="sidebar">
    <i class="fas fa-user icon active" id="user-icon" onclick="showUserContent()">
    </i>
@@ -348,22 +502,22 @@
    <div class="form-group">
     <i class="fas fa-map-marker-alt">
     </i>
-    <input data-lang data-lang-es="Dirección" data-lang-en="Address" disabled placeholder="Dirección" type="text" value="Calle Falsa 123"/>
+    <input id = "direccion" data-lang data-lang-es="Dirección" data-lang-en="Address" disabled placeholder="Dirección" type="text" value=""/>
    </div>
    <div class="form-group">
     <i class="fas fa-city">
     </i>
-    <input data-lang data-lang-es="Ciudad" data-lang-en="City" disabled placeholder="Ciudad" type="text" value="Ciudad Imaginaria"/>
+    <input id = "cuidad" data-lang data-lang-es="Ciudad" data-lang-en="City" disabled placeholder="Ciudad" type="text" value=""/>
    </div>
    <div class="form-group">
     <i class="fas fa-map">
     </i>
-    <input data-lang data-lang-es="Región" data-lang-en="Region" disabled placeholder="Región" type="text" value="Región Fantástica"/>
+    <input id = "region" data-lang data-lang-es="Región" data-lang-en="Region" disabled placeholder="Región" type="text" value=""/>
    </div>
    <div class="form-group">
     <i class="fas fa-seedling">
     </i>
-    <input data-lang data-lang-es="Tamaño del cultivo" data-lang-en="Crop Size" disabled placeholder="Tamaño del cultivo" type="text" value="10 hectáreas"/>
+    <input id = "area" data-lang data-lang-es="Tamaño del cultivo" data-lang-en="Crop Size" disabled placeholder="Tamaño del cultivo" type="text" value=""/>
    </div>
    <button class="edit-button" onclick="enableEditing('location-content')" data-lang data-lang-es="Editar" data-lang-en="Edit">
     Editar
@@ -380,34 +534,36 @@
     Gestiona tu información personal aquí
    </p>
    <div class="profile-pic" id="profile-pic">
-    <input accept="image/*" id="profile-pic-input" onchange="previewProfilePic(event)" type="file"/>
-    <label for="profile-pic-input">
+    <input accept="image/*" id="photo-input" onchange="previewProfilePic(event)" type="file"/>
+    <input type="file" id="file-input" />
+    <label for="photo-input">
     </label>
-   </div>
+</div>
+
    <div class="form-group">
     <i class="fas fa-user">
     </i>
-    <input data-lang data-lang-es="Nombre del usuario" data-lang-en="User Name" disabled placeholder="Nombre del usuario" type="text" value="Juan Pérez"/>
+    <input id = "usuario" data-lang data-lang-es="Nombre del usuario" data-lang-en="User Name" disabled placeholder="Nombre del usuario" type="text" value=""/>
    </div>
    <div class="form-group">
     <i class="fas fa-envelope">
     </i>
-    <input data-lang data-lang-es="correoimaginario@gmail.com" data-lang-en="imaginaryemail@gmail.com" disabled placeholder="correoimaginario@gmail.com" type="email" value="correoimaginario@gmail.com"/>
+    <input id = "correo" data-lang data-lang-es="correoimaginario@gmail.com" data-lang-en="imaginaryemail@gmail.com" disabled placeholder="correoimaginario@gmail.com" type="email" value=""/>
    </div>
    <div class="form-group">
     <i class="fas fa-phone">
     </i>
-    <input data-lang data-lang-es="+505 0000 0000" data-lang-en="+505 0000 0000" disabled placeholder="+505 0000 0000" type="text" value="+505 0000 0000"/>
+    <input id = "numero" data-lang data-lang-es="+505 0000 0000" data-lang-en="+505 0000 0000" disabled placeholder="+505 0000 0000" type="text" value=""/>
    </div>
    <div class="form-group">
     <i class="fas fa-leaf">
     </i>
-    <input data-lang data-lang-es="Cultivos del usuario" data-lang-en="User Crops" disabled placeholder="Cultivos del usuario" type="text" value="Maíz, Frijol"/>
+    <input id = "cultivo" data-lang data-lang-es="Cultivos del usuario" data-lang-en="User Crops" disabled placeholder="Cultivos del usuario" type="text" value=""/>
    </div>
    <div class="form-group">
     <i class="fas fa-lock">
     </i>
-    <input data-lang data-lang-es="Contraseña" data-lang-en="Password" disabled placeholder="Contraseña" type="password" value="password123"/>
+    <input id = "contraseña" data-lang data-lang-es="Contraseña" data-lang-en="Password" disabled placeholder="Contraseña" type="password" value=""/>
    </div>
    <button class="edit-button" onclick="enableEditing('user-content')" data-lang data-lang-es="Editar" data-lang-en="Edit">
     Editar
@@ -463,7 +619,7 @@
       </option>
      </select>
     </div>
-    <button class="logout-button" data-lang data-lang-es="Cerrar sesión" data-lang-en="Log Out">
+    <button id = "logout-button"class="logout-button" data-lang data-lang-es="Cerrar sesión" data-lang-en="Log Out">
      Cerrar sesión
     </button>
    </div>

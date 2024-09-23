@@ -3,18 +3,17 @@ require_once 'database.php';
 //echo json_encode([$_POST, "Respuesta" => "Respuesta"]);
 //return;
 
-
-
 if (isset($_POST)) {
     $username = $_POST['username'];
     $email = $_POST['email'];
     $password = $_POST['password'];
-     $phone = $_POST['phone'];
+    $phone = $_POST['phone'];
+    $cultivo = $_POST['cultivo']; 
     //echo json_encode([$_POST, "Respuesta" => "Respuesta"]);
     //return;
      
     // Validate input]
-    if (empty($username) || empty($email) || empty($password) || empty($phone)) {
+    if (empty($username) || empty($email) || empty($password) || empty($phone) || empty($cultivo)) {
         echo json_encode(["Respuesta" => "Please fill in all fields"]);
         exit;
     }
@@ -33,7 +32,7 @@ if (isset($_POST)) {
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
     // Insert into database
-    $query = "INSERT INTO users (username, email, password,phone) VALUES ('$username', '$email', '$hashed_password', '$phone')";
+    $query = "INSERT INTO users (username, email, password,phone, cultivo) VALUES ('$username', '$email', '$hashed_password', '$phone', '$cultivo')";
     if ($conn->query($query) === TRUE) {
         
         echo json_encode(["Respuesta" => "Registration successful"]);

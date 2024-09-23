@@ -171,7 +171,7 @@
    <a href="nosotros.html">
     Nosotros
    </a>
-   <a href="usuario.html">
+   <a href="perfil.php">
     Usuario
    </a>
    <a href="chatbot.html">
@@ -244,7 +244,7 @@
      </div>
     </div>
     <div class="details">
-     <a href="#">
+     <a href="grafica.php">
       Detalles
      </a>
     </div>
@@ -287,7 +287,7 @@
      </div>
     </div>
     <div class="details">
-     <a href="#">
+     <a href="grafica.php">
       Detalles
      </a>
     </div>
@@ -330,7 +330,7 @@
      </div>
     </div>
     <div class="details">
-     <a href="#">
+     <a href="grafica.php">
       Detalles
      </a>
     </div>
@@ -373,7 +373,7 @@
      </div>
     </div>
     <div class="details">
-     <a href="#">
+     <a href="grafica.php">
       Detalles
      </a>
     </div>
@@ -416,7 +416,7 @@
      </div>
     </div>
     <div class="details">
-     <a href="#">
+     <a href="grafica.php">
       Detalles
      </a>
     </div>
@@ -459,7 +459,7 @@
      </div>
     </div>
     <div class="details">
-     <a href="#">
+     <a href="grafica.php">
       Detalles
      </a>
     </div>
