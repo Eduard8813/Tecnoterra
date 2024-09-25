@@ -12,11 +12,11 @@ $user_profile = $result->fetch_assoc();
 
 if (!empty($user_profile['region']) && !empty($user_profile['area']) && !empty($user_profile['city'])) {
     // User has filled in all fields, redirect to page A
-    header('Location: sensores.php');
+    header('Location: ../webs/sensores.php');
     exit;
 } else {
     // User hasn't filled in all fields, redirect to page B
-    header('Location: datos.php');
+    header('Location: ../webs/datos.php');
     exit;
 }
 

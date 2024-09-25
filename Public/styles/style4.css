@@ -1,0 +1,264 @@
+ body {
+     font-family: 'Arial', sans-serif;
+     margin: 0;
+     padding: 0;
+     background-color: #fff;
+     color: #333;
+ }
+
+ .header {
+     background-color: white;
+     padding: 10px 0;
+     text-align: center;
+     position: relative;
+ }
+
+ .header img {
+     height: 150px;
+ }
+
+ .header .menu-icon {
+     position: absolute;
+     right: 20px;
+     top: 20px;
+     font-size: 24px;
+     color: green;
+     cursor: pointer;
+ }
+
+ .nav-bar {
+     background-color: #3CB043;
+     padding: 10px 0;
+     text-align: center;
+     border-radius: 0 0 20px 20px;
+     display: none;
+ }
+
+ .nav-bar a {
+     color: white;
+     text-decoration: none;
+     margin: 0 20px;
+     font-size: 18px;
+ }
+
+ .sidebar {
+     width: 60px;
+     background-color: #f8f8f8;
+     padding-top: 20px;
+     position: fixed;
+     height: 100%;
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+ }
+
+ .sidebar .icon {
+     font-size: 24px;
+     margin: 20px 0;
+     color: #888;
+     cursor: pointer;
+     transition: color 0.3s;
+ }
+
+ .sidebar .icon.active {
+     color: #4CAF50;
+ }
+
+ .content {
+     margin-left: 0px;
+     padding: 20px;
+     text-align: center;
+ }
+
+ .content h1 {
+     font-size: 24px;
+     margin-bottom: 10px;
+ }
+
+ .content p {
+     font-size: 14px;
+     color: #666;
+     margin-bottom: 30px;
+ }
+
+ .content .option {
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     margin-bottom: 20px;
+ }
+
+ .content .option i {
+     font-size: 18px;
+     margin-right: 10px;
+     color: #888;
+ }
+
+ .content .option span {
+     font-size: 16px;
+     color: #333;
+ }
+
+ .content .option-container {
+     width: 300px;
+     padding: 10px 20px;
+     border: 1px solid #ddd;
+     border-radius: 25px;
+     display: flex;
+     align-items: center;
+     justify-content: flex-start;
+     cursor: pointer;
+     transition: background-color 0.3s, border-color 0.3s;
+ }
+
+ .content .option-container:hover {
+     background-color: #f0f0f0;
+     border-color: #ccc;
+ }
+
+ .hidden {
+     display: none;
+ }
+
+ .settings {
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+ }
+
+ .setting-item {
+     background-color: white;
+     border: 1px solid #ddd;
+     border-radius: 25px;
+     width: 300px;
+     padding: 10px 20px;
+     margin-bottom: 20px;
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+     transition: background-color 0.3s, border-color 0.3s;
+ }
+
+ .setting-item:hover {
+     background-color: #f0f0f0;
+     border-color: #ccc;
+ }
+
+ .setting-item i {
+     color: #888;
+ }
+
+ .setting-item span {
+     flex-grow: 1;
+     text-align: left;
+     margin-left: 10px;
+ }
+
+ .setting-item .toggle {
+     width: 40px;
+     height: 20px;
+     background-color: #4caf50;
+     border-radius: 10px;
+     position: relative;
+     cursor: pointer;
+ }
+
+ .setting-item .toggle::before {
+     content: '';
+     position: absolute;
+     top: 2px;
+     left: 2px;
+     width: 16px;
+     height: 16px;
+     background-color: white;
+     border-radius: 50%;
+     transition: 0.3s;
+ }
+
+ .setting-item .toggle.active::before {
+     left: 22px;
+ }
+
+ .setting-item select {
+     border: none;
+     background: none;
+     font-size: 16px;
+     color: #4a4a4a;
+     cursor: pointer;
+ }
+
+ .logout-button {
+     background-color: #003366;
+     color: white;
+     border: none;
+     border-radius: 25px;
+     padding: 10px 20px;
+     font-size: 16px;
+     cursor: pointer;
+     transition: background-color 0.3s;
+ }
+
+ .logout-button:hover {
+     background-color: #002244;
+ }
+
+ .edit-button,
+ .save-button {
+     background-color: #4CAF50;
+     color: white;
+     border: none;
+     border-radius: 25px;
+     padding: 10px 20px;
+     font-size: 16px;
+     cursor: pointer;
+     transition: background-color 0.3s;
+ }
+
+ .edit-button:hover,
+ .save-button:hover {
+     background-color: #388E3C;
+ }
+
+ .form-group {
+     margin-bottom: 20px;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+ }
+
+ .form-group input {
+     width: 300px;
+     padding: 10px;
+     border: 1px solid #ddd;
+     border-radius: 25px;
+     font-size: 16px;
+     color: #333;
+     outline: none;
+     transition: border-color 0.3s;
+ }
+
+ .form-group input:focus {
+     border-color: #4CAF50;
+ }
+
+ .profile-pic {
+     width: 100px;
+     height: 100px;
+     border-radius: 50%;
+     background-color: #ddd;
+     display: block;
+     margin: 0 auto 20px;
+     background-size: cover;
+     background-position: center;
+ }
+
+ .profile-pic input {
+     display: none;
+ }
+
+ .profile-pic label {
+     display: block;
+     width: 100%;
+     height: 100%;
+     cursor: pointer;
+ }
