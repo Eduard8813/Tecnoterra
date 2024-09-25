@@ -2,6 +2,6 @@
  Se realizo el inicio de sesion y la visualizacion de la lectura de los sensores
  
 <img alt="Logo de TecnoTerra" src="./Public/Imagenes/nombre.png">
-<img alt="Logo de TecnoTerra" src="./public/Imagenes/fondo.jpeg">
+<img alt="Logo de inicio de sesion" src="./Public/Imagenes/nombre.png
 
 
