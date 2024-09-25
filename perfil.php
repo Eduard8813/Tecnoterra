@@ -485,7 +485,7 @@ document.addEventListener('DOMContentLoaded', function() {
    </i>
   </div>
   <div class="nav-bar">
-
+    <a href="sensores.php">Inicio</a>
    <a href="perfil.php" data-lang data-lang-es="Usuario" data-lang-en="User">
     Usuario
    </a>

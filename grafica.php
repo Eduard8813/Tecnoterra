@@ -146,10 +146,9 @@
         <i class="fas fa-bars menu-icon" onclick="toggleNavBar()"></i>
     </div>
     <div class="nav-bar" id="navBar">
-        <a href="nosotros.html">Nosotros</a>
-        <a href="usuario.html">Usuario</a>
+        <a href="sensores.php">Inicio</a>
+        <a href="perfil.php">Usuario</a>
         <a href="chatbot.html">Chat Bot</a>
-        <a href="manual.html">Manual de uso</a>
     </div>
     <div class="content">
         <div class="container">
