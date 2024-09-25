@@ -58,6 +58,16 @@
             justify-content: center;
             padding: 20px;
         }
+
+         .container.par {
+        grid-template-columns: repeat(2, 1fr);
+        grid-auto-rows: 1fr;
+          }
+
+        .container.impar {
+        grid-template-columns: repeat(3, 1fr);
+        grid-auto-rows: 1fr;
+        }
         .card {
             background-color: #ffffff;
             border-radius: 10px;
@@ -172,7 +182,7 @@
    <a href="perfil.php">
     Usuario
    </a>
-   <a href="chatbot.html">
+   <a href="chatbot.php">
     Chat Bot
    </a>
   </div>
@@ -485,7 +495,7 @@
       Enlaces
      </h3>
      <p>
-      <a href="chatbot.html" style="color: #ffffff; text-decoration: none;">
+      <a href="chatbot.php" style="color: #ffffff; text-decoration: none;">
        Chat Bot
       </a>
      </p>
@@ -493,6 +503,8 @@
    </div>
   </div>
   <script>
+    const footerContainer = document.querySelector('.footer-container');
+    footerContainer.style.display = 'none';
     let firstRun = true;
   function toggleMenu() {
   var navMenu = document.getElementById('navMenu');
@@ -585,10 +597,25 @@ function updateAllCards() {
           console.log('No se encontró el bloque con el ID ' + cultivo);
         }
       });
+
+      // Contar el número de bloques
+      const numBloques = cultivos.length;
+
+      // Agregar la clase correspondiente al contenedor
+      const container = document.querySelector('.container'); 
+      if (numBloques % 2 === 0) {
+        container.classList.add('par');
+        container.classList.remove('impar');
+      } else {
+        container.classList.add('impar');
+        container.classList.remove('par');
+      }
+
+      const footerContainer = document.querySelector('.footer-container');
+      footerContainer.style.display = 'block';
     })
     .catch(error => console.error('Error:', error));
 }
-
 setInterval(updateAllCards, 1000);
   </script>
  </body>

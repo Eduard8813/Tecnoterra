@@ -148,7 +148,7 @@
     <div class="nav-bar" id="navBar">
         <a href="sensores.php">Inicio</a>
         <a href="perfil.php">Usuario</a>
-        <a href="chatbot.html">Chat Bot</a>
+        <a href="chatbot.php">Chat Bot</a>
     </div>
     <div class="content">
         <div class="container">

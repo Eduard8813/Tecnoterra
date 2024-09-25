@@ -489,7 +489,7 @@ document.addEventListener('DOMContentLoaded', function() {
    <a href="perfil.php" data-lang data-lang-es="Usuario" data-lang-en="User">
     Usuario
    </a>
-   <a href="chatbot.html" data-lang data-lang-es="Chat Bot" data-lang-en="Chat Bot">
+   <a href="chatbot.php" data-lang data-lang-es="Chat Bot" data-lang-en="Chat Bot">
     Chat Bot
    </a>
   </div>
