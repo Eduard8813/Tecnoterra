@@ -168,17 +168,11 @@
    </i>
   </div>
   <div class="nav" id="navMenu">
-   <a href="nosotros.html">
-    Nosotros
-   </a>
    <a href="perfil.php">
     Usuario
    </a>
    <a href="chatbot.html">
     Chat Bot
-   </a>
-   <a href="manual.html">
-    Manual de uso
    </a>
   </div>
   <div class="content" id="nosotros">

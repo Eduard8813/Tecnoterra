@@ -63,7 +63,7 @@
             color: #4CAF50;
         }
         .content {
-            margin-left: 80px;
+            margin-left: 0px;
             padding: 20px;
             text-align: center;
         }
@@ -243,6 +243,21 @@ function toggleMenu() {
   }
 }
 
+document.addEventListener('DOMContentLoaded', function() {
+  showUserContent();
+});
+
+function setActiveIcon(iconId) {
+  var icons = document.querySelectorAll('.sidebar .icon');
+  icons.forEach(function(icon) {
+    icon.classList.remove('active');
+  });
+  document.getElementById(iconId).classList.add('active');
+  
+  if (iconId === 'user-icon') {
+    showUserContent();
+  }
+}
 // Función para mostrar el contenido del usuario
 async function showUserContent() {
   document.getElementById('location-content').classList.add('hidden');
@@ -396,7 +411,7 @@ async function saveChanges(section) {
   })
   .catch(error => console.error('Error:', error));
 }
-
+/*
 // Función para mostrar la foto de perfil
 function showProfilePicture() {
   var userIdElement = document.getElementById('user-id');
@@ -441,7 +456,7 @@ function showProfilePicture() {
 document.addEventListener('DOMContentLoaded', function() {
   showProfilePicture();
 });
-
+*/
 // Función para cerrar la sesión
 function cerrarSesion() {
   fetch('cerrarsesion.php?cerrar_sesion=true', {
@@ -470,17 +485,12 @@ document.addEventListener('DOMContentLoaded', function() {
    </i>
   </div>
   <div class="nav-bar">
-   <a href="nosotros.html" data-lang data-lang-es="Nosotros" data-lang-en="About Us">
-    Nosotros
-   </a>
+
    <a href="perfil.php" data-lang data-lang-es="Usuario" data-lang-en="User">
     Usuario
    </a>
    <a href="chatbot.html" data-lang data-lang-es="Chat Bot" data-lang-en="Chat Bot">
     Chat Bot
-   </a>
-   <a href="manual.html" data-lang data-lang-es="Manual de uso" data-lang-en="User Manual">
-    Manual de uso
    </a>
   </div>
   <div id="user-id" data-value="<?php echo $_SESSION['user_id']; ?>"></div>
@@ -533,13 +543,6 @@ document.addEventListener('DOMContentLoaded', function() {
    <p data-lang data-lang-es="Gestiona tu información personal aquí" data-lang-en="Manage your personal information here">
     Gestiona tu información personal aquí
    </p>
-   <div class="profile-pic" id="profile-pic">
-    <input accept="image/*" id="photo-input" onchange="previewProfilePic(event)" type="file"/>
-    <input type="file" id="file-input" />
-    <label for="photo-input">
-    </label>
-</div>
-
    <div class="form-group">
     <i class="fas fa-user">
     </i>

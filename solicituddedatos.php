@@ -9,7 +9,7 @@ if (isset($_SESSION['user_id'])) {
     $user_id = $_SESSION['user_id'];
 
     // Consultar la base de datos para obtener los campos de la tabla users
-    $query = "SELECT username, email, phone, password, city, region, area, cultivo, direccion, photo FROM users WHERE id = '$user_id'";
+    $query = "SELECT username, email, phone, password, city, region, area, cultivo, direccion FROM users WHERE id = '$user_id'";
     $result = $conn->query($query);
 
     // Verificar si la consulta devolvió resultados
@@ -28,15 +28,6 @@ if (isset($_SESSION['user_id'])) {
             'region' => $user_profile['region'],
             'tamaño_cultivo' => $user_profile['area'],
         );
-
-        // Verificar si la foto existe
-        if (!empty($user_profile['photo'])) {
-        $image_path = $user_profile['photo'];
-        $data['photo'] = '<img src="' . $image_path . '" alt="Profile Picture">';
-        }  else {
-            $data['photo'] = 'No hay foto disponible';
-        }
-
         // Enviar los datos como JSON
         header('Content-Type: application/json');
         echo json_encode($data, JSON_UNESCAPED_SLASHES);
@@ -90,34 +81,5 @@ if (isset($_SESSION['user_id'])) {
             }
         }
     }
-
-    // Función para actualizar la foto de perfil
-    if (isset($_FILES['photo'])) {
-        $photo = $_FILES['photo'];
-
-        // Verificar si la foto es válida
-        if ($photo['error'] == 0) {
-            // Subir la foto a la carpeta de imágenes
-            $upload_dir = 'images/';
-            $photo_name = $user_id . '_' . $photo['name'];
-            $photo_path = $upload_dir . $photo_name;
-            move_uploaded_file($photo['tmp_name'], $photo_path);
-
-            // Actualizar la base de datos con la ruta de la foto
-            $query = "UPDATE users SET photo = '$photo_path' WHERE id = '$user_id'";
-            $conn->query($query);
-
-            // Verificar si se actualizó correctamente
-            if ($conn->affected_rows > 0) {
-                echo ' Foto de perfil actualizada correctamente';
-            } else {
-                echo 'No se pudo actualizar la foto de perfil';
-            }
-        } else {
-            echo 'Error al subir la foto';
-        }
-    }
-} else {
-    echo 'No se ha iniciado sesión';
 }
 ?>
