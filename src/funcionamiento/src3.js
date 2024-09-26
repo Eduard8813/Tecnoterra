@@ -80,13 +80,13 @@ function updateAllCards() {
 
             // Obtener la lista de cultivos
             const cultivos = data.cultivo.split(','); // Separar la cadena en un arreglo
-
+            
             // Mostrar los bloques correspondientes a los cultivos
             cultivos.forEach(cultivo => {
                 const bloque = document.getElementById(cultivo.trim().toLowerCase()); // Eliminar espacios en blanco y convertir a minúscula
                 if (bloque) {
                     bloque.style.display = 'block';
-                    console.log('si')
+                    console.log(cultivo)
                     updateCard(cultivo.trim().toLowerCase()); // Llamar a la función updateCard(cardId) con el nombre del cultivo
                 } else {
                     console.log('No se encontró el bloque con el ID ' + cultivo);
