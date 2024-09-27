@@ -12,7 +12,7 @@ $user_profile = $result->fetch_assoc();
 
 if (!empty($user_profile['cultivo'])) {
     // User has filled in all fields, redirect to page A
-    header('Location: ./backend/consultadedatos.php');
+    header('Location: ./consultadedatos.php');
     exit;
 } else {
     // User hasn't filled in all fields, redirect to page B
