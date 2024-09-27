@@ -67,9 +67,8 @@ function validateRegisterForm() {
     const emailInput = document.getElementById('register-email');
     const passwordInput = document.getElementById('register-password');
     const phoneInput = document.getElementById('register-phone');
-    const cultivoInput = document.getElementById('register-cultivo');
 
-    if (usernameInput.value.trim() === '' || emailInput.value.trim() === '' || passwordInput.value.trim() === '' || phoneInput.value.trim() === '' || cultivoInput.value.trim() === '') {
+    if (usernameInput.value.trim() === '' || emailInput.value.trim() === '' || passwordInput.value.trim() === '' || phoneInput.value.trim() === '' ) {
         alert('Por favor, ingresa todos los campos');
         return false;
     } else {
@@ -84,14 +83,12 @@ async function registerUser() {
     const emailInput = document.getElementById('register-email');
     const passwordInput = document.getElementById('register-password');
     const phoneInput = document.getElementById('register-phone');
-    const cultivoInput = document.getElementById('register-cultivo');
 
     const formData = new FormData();
     formData.append('username', usernameInput.value);
     formData.append('email', emailInput.value);
     formData.append('password', passwordInput.value);
     formData.append('phone', phoneInput.value);
-    formData.append('cultivo', cultivoInput.value);
 
     // Validar los campos del formulario de registro
     if (validateRegisterForm()) {
@@ -100,7 +97,6 @@ async function registerUser() {
         console.log('Correo electrónico:', emailInput.value);
         console.log('Contraseña:', passwordInput.value);
         console.log('phone', phoneInput.value)
-        console.log('Cultivo', cultivoInput.value);
 
         //try {
         //    const resp = await fetch('register.php', {

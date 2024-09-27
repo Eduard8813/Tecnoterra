@@ -8,12 +8,11 @@ if (isset($_POST)) {
     $email = $_POST['email'];
     $password = $_POST['password'];
     $phone = $_POST['phone'];
-    $cultivo = $_POST['cultivo']; 
     //echo json_encode([$_POST, "Respuesta" => "Respuesta"]);
     //return;
      
     // Validate input]
-    if (empty($username) || empty($email) || empty($password) || empty($phone) || empty($cultivo)) {
+    if (empty($username) || empty($email) || empty($password) || empty($phone)) {
         echo json_encode(["Respuesta" => "Please fill in all fields"]);
         exit;
     }
@@ -32,7 +31,7 @@ if (isset($_POST)) {
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
     // Insert into database
-    $query = "INSERT INTO users (username, email, password,phone, cultivo) VALUES ('$username', '$email', '$hashed_password', '$phone', '$cultivo')";
+    $query = "INSERT INTO users (username, email, password,phone) VALUES ('$username', '$email', '$hashed_password', '$phone')";
     if ($conn->query($query) === TRUE) {
         
         echo json_encode(["Respuesta" => "Registration successful"]);

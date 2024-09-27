@@ -37,12 +37,6 @@
                      <input type="tel" placeholder="Número de teléfono" id="register-phone">
                      <div id="register-phone-error" class="hidden text-red-500 text-sm">El número de teléfono es obligatorio.</div>
                 </div>
-            
-                <div class="input-group">
-                   <i class="fas fa-seedling"></i>
-                   <input type="text" placeholder="Nombre del cultivo" id="register-cultivo">
-                   <div id="register-cultivo-error" class="hidden text-red-500 text-sm">El nombre del cultivo es obligatorio.</div>
-                </div>
             <div class="input-group">
                 <i class="fas fa-lock"></i>
                 <input type="password" placeholder="Contraseña" id="register-password">
