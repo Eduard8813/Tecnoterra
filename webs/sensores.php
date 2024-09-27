@@ -9,7 +9,7 @@
  </head>
  <body>
   <div class="header">
-   <img alt="TecnoTerra Logo" height="50" src="../public/imagenes/nombre.png" width="250"/>
+   <img alt="TecnoTerra Logo" height="1000" src="../public/imagenes/nombre.png" width="200"/>
    <i class="fas fa-bars menu-icon" onclick="toggleMenu()">
    </i>
   </div>
@@ -90,7 +90,7 @@
      </a>
     </div>
    </div>
-   <div class="card" id="frijol">
+   <div class="card" id="frijoles">
     <h3>
      Campo de frijol
     </h3>
@@ -133,7 +133,7 @@
      </a>
     </div>
    </div>
-   <div class="card" id="maiz">
+   <div class="card" id="maíz">
     <h3>
      Campo de maíz
     </h3>
@@ -219,7 +219,7 @@
      </a>
     </div>
    </div>
-   <div class="card" id="trigo">
+   <div class="card" id="café">
     <h3>
      Campo de trigo
     </h3>
@@ -262,7 +262,7 @@
      </a>
     </div>
    </div>
-   <div class="card" id="cebada">
+   <div class="card" id="cacao">
     <h3>
      Campo de cebada
     </h3>

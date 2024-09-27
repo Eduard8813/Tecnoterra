@@ -79,7 +79,7 @@ function updateAllCards() {
             });
 
             // Obtener la lista de cultivos
-            const cultivos = data.cultivo.split(','); // Separar la cadena en un arreglo
+            const cultivos = data.cultivo.split(/[,\s]+/); // Split by commas and one or more spaces
             
             // Mostrar los bloques correspondientes a los cultivos
             cultivos.forEach(cultivo => {

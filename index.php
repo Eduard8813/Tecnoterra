@@ -61,7 +61,7 @@
                 <input type="password" placeholder="Contraseña" id="login-password">
                 <div id="login-password-error" class="hidden text-red-500 text-sm">La contraseña es obligatoria.</div>
             </div>
-            <button class="btn" onclick="validateLoginForm()">Iniciar sesión</button>
+            <button class="btn" id="login-btn" onclick="validateLoginForm()">Iniciar sesión</button>
             <p id="text" class="mt-4">¿Aún no tienes una cuenta?</p>
             <a class="register-link" href="#" id="register-link">Crear cuenta</a>
         </div>

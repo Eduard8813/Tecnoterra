@@ -1,5 +1,6 @@
+// Variable global para determinar si se está en el formulario de inicio de sesión o registro
 let isLoginForm = true;
-document.querySelectorAll('register').forEach(input => input.value = '');
+
 // Función para togglear entre los formularios de inicio de sesión y registro
 function toggleForms() {
     const loginForm = document.getElementById('login-form');
@@ -13,13 +14,23 @@ function toggleForms() {
         registerForm.classList.add('hidden');
         registerLink.classList.remove('hidden');
         backArrow.classList.add('hidden');
+        isLoginForm = true;
+        clearFormData();
     } else {
         loginForm.classList.add('hidden');
         registerForm.classList.remove('hidden');
         registerLink.classList.add('hidden');
         backArrow.classList.remove('hidden');
+        isLoginForm = false;
+        clearFormData();
     }
+}
 
+// Función para clear form data
+function clearFormData() {
+    document.querySelectorAll('input').forEach(input => input.value = '');
+    document.querySelectorAll('#login-form input').forEach(input => input.value = ''); // Clear login form data
+    document.querySelectorAll('#register-form input').forEach(input => input.value = ''); // Clear register form data
 }
 
 // Función para validar campos vacíos en el formulario de inicio de sesión
@@ -30,13 +41,11 @@ function validateLoginForm() {
     if (usernameInput.value.trim() === '' || passwordInput.value.trim() === '') {
         alert('Por favor, ingresa ambos campos');
         return false;
-    }
-    else {
+    } else {
         const formData = new FormData();
         formData.append('username', usernameInput.value);
         formData.append('password', passwordInput.value);
         formData.append("login", true)
-
 
         fetch('./backend/login.php', {
             method: 'POST',
@@ -44,22 +53,18 @@ function validateLoginForm() {
         })
             .then(response => response.json())
             .then(data => {
-
-
                 console.log(data)
 
                 if (data.Respuesta === 'Login successful') {
-                    window.location.href = './backend/consultadedatos.php';
+                    window.location.href = './backend/peticioncultivo.php';
                 } else {
-                    alert('Credenciales incorrectas');
+                    alert('Usuario o contraseña incorrecta');
                 }
             })
             .catch(error => console.error(error));
         return true;
     }
-
 }
-
 
 // Función para validar campos vacíos en el formulario de registro
 function validateRegisterForm() {
@@ -68,7 +73,7 @@ function validateRegisterForm() {
     const passwordInput = document.getElementById('register-password');
     const phoneInput = document.getElementById('register-phone');
 
-    if (usernameInput.value.trim() === '' || emailInput.value.trim() === '' || passwordInput.value.trim() === '' || phoneInput.value.trim() === '' ) {
+    if (usernameInput.value.trim() === '' || emailInput.value.trim() === '' || passwordInput.value.trim() === '' || phoneInput.value.trim() === '') {
         alert('Por favor, ingresa todos los campos');
         return false;
     } else {
@@ -98,21 +103,6 @@ async function registerUser() {
         console.log('Contraseña:', passwordInput.value);
         console.log('phone', phoneInput.value)
 
-        //try {
-        //    const resp = await fetch('register.php', {
-        //         method: 'POST',
-        //         body: formData
-        //     })
-
-        //     console.log(resp)
-        //    const data = await resp.json()
-        //    console.log(data)
-
-        // } catch (error) {
-
-        //     console.log(error)
-        // }
-
         fetch('./backend/register.php', {
             method: 'POST',
             body: formData
@@ -120,14 +110,18 @@ async function registerUser() {
             .then(response => response.json())
             .then(data => {
                 console.log(data)
+                if (data.Respuesta === 'Username already exists') {
+                    alert('Usuario ya existe');
+                }
                 if (data.Respuesta === 'Registration successful') {
                     toggleForms();
-                    document.querySelectorAll('input').forEach(input => input.value = '');
+                    clearFormData();
                 }
             })
             .catch(error => console.error(error));
     }
 }
+
 // Agregar eventos a los botones de inicio de sesión y registro
 document.getElementById('register-link').addEventListener('click', () => {
     isLoginForm = false;
@@ -136,22 +130,17 @@ document.getElementById('register-link').addEventListener('click', () => {
 
 document.getElementById('login-link').addEventListener('click', () => {
     isLoginForm = true;
-    validateLoginForm();
+    toggleForms();
 });
 
 document.getElementById('back-arrow').addEventListener('click', toggleForms);
 
 // Agregar evento al botón de inicio de sesión
-document.querySelector('.btn').addEventListener('click', (e) => {
+document.getElementById('login-btn').addEventListener('click', (e) => {
     e.preventDefault();
-    if (isLoginForm) {
-        // Estoy en el formulario de login
-        validateLoginForm();
-    } else {
-        // Estoy en el formulario de registro
-        toggleForms();
-    }
+    validateLoginForm();
 });
+
 // Agregar evento al botón de registro
 document.getElementById('register-form').addEventListener('submit', (e) => {
     e.preventDefault();
@@ -159,5 +148,5 @@ document.getElementById('register-form').addEventListener('submit', (e) => {
 });
 
 document.getElementById('register-btn').addEventListener('click', () => {
-    validateLoginForm();
+    registerUser();
 });

@@ -5,7 +5,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 100vh;
+    min-height: 0vh;
     background-color: rgba(0, 0, 0, 0.5);
     color: white;
     font-family: Arial, sans-serif;
@@ -40,7 +40,7 @@ body {
 }
 
 .input-group input {
-    width: 80%;
+    width: 100%;
     padding: 0.5rem 0.75rem 0.5rem 2.5rem;
     border-radius: 9999px;
     border: 1px solid #D1D5DB;

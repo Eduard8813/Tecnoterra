@@ -8,7 +8,7 @@
  </head>
  <body>
   <div class="header">
-   <img alt="TecnoTerra Logo" height="50" src="../public/imagenes/nombre.png" width="250"/>
+   <img alt="TecnoTerra Logo" height="50" src="../public/imagenes/nombre.png" width="200"/>
    <i class="fas fa-bars menu-icon" onclick="toggleMenu()">
    </i>
   </div>
