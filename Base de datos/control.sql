@@ -11,6 +11,8 @@ CREATE TABLE users (
   city VARCHAR(100) NOT NULL,
   region VARCHAR(100) NOT NULL,
   area VARCHAR(100) NOT NULL,
+  temperature FLOAT,
+  humidity FLOAT,
   cultivo VARCHAR(100) NOT NULL,
   direccion VARCHAR(255) NOT NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

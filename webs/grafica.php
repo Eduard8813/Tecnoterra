@@ -24,12 +24,12 @@
             </div>
             <div class="item">
                 <i class="fas fa-thermometer-half" id="temperatura-icon"></i>
-                <p id="temperatura">26°C</p>
+                <p id="temperatura">cargando...</p>
                 <p>Temperatura</p>
             </div>
             <div class="item">
                 <i class="fas fa-tint" id="humedad-icon"></i>
-                <p id="humedad">30%</p>
+                <p id="humedad">cargando...</p>
                 <p>Humedad</p>
             </div>
         </div>
@@ -64,12 +64,49 @@
         </div>
     </div>
     <script>
-        function toggleNavBar() {
+  function toggleNavBar() {
     var navBar = document.getElementById('navBar');
     if (navBar.style.display === 'none' || navBar.style.display === '') {
         navBar.style.display = 'flex';
     } else {
         navBar.style.display = 'none';
+    }
+}
+
+function fetchData() {
+    fetch('../backend/pedirsensores.php')
+        .then(response => response.json())
+        .then(data => {
+            console.log(data); // Verifica la estructura de los datos
+            if (data.error) {
+                console.error(data.error);
+                return; // Salir si hay un error
+            }
+            const temperatura = parseFloat(data.temperatura);
+            const humedad = parseFloat(data.humedad);
+
+            document.getElementById('temperatura').innerText = temperatura + '°C';
+            document.getElementById('humedad').innerText = humedad + '%';
+
+            // Cambia el color de los elementos según los valores
+            updateCardColor(document.getElementById('temperatura-icon'), temperatura, { low: 25, high: 30 }); // Umbrales para temperatura
+            updateCardColor(document.getElementById('humedad-icon'), humedad, { low: 30, high: 60 }); // Umbrales para humedad
+        })
+        .catch(error => console.error('Error fetching data:', error));
+}
+
+// Llama a fetchData cada 5 segundos
+setInterval(fetchData, 5000);
+// Llama a fetchData al cargar la página
+window.onload = fetchData;
+
+function updateCardColor(element, value, thresholds) {
+    if (value < thresholds.low) {
+        element.style.color = 'yellow'; // Menos de 25°C
+    } else if (value >= thresholds.low && value <= thresholds.high) {
+        element.style.color = 'green'; // Entre 25°C y 30°C
+    } else {
+        element.style.color = 'red'; // Más de 30°C
     }
 }
 
@@ -194,8 +231,6 @@ function updateCardColor(element, value, thresholds) {
 
 function updateAssistant() {
     const estadoCultivo = parseInt(document.getElementById('estado-cultivo').innerText);
-    const temperatura = parseInt(document.getElementById('temperatura').innerText);
-    const humedad = parseInt(document.getElementById('humedad').innerText);
     const tensionAgua = parseInt(document.getElementById('tension-agua').innerText);
     const actividadMicrobiana = document.getElementById('actividad-microbiana').innerText;
     const perdidaAgua = parseInt(document.getElementById('perdida-agua').innerText);
@@ -240,22 +275,16 @@ function updateAssistant() {
 // Simulate data update
 setInterval(() => {
     const estadoCultivo = Math.floor(Math.random() * 100);
-    const temperatura = Math.floor(Math.random() * 40);
-    const humedad = Math.floor(Math.random() * 100);
     const tensionAgua = Math.floor(Math.random() * 100);
     const actividadMicrobiana = Math.random() > 0.5 ? 'Alta' : 'Baja';
     const perdidaAgua = Math.floor(Math.random() * 100);
 
     document.getElementById('estado-cultivo').innerText = estadoCultivo + '%';
-    document.getElementById('temperatura').innerText = temperatura + '°C';
-    document.getElementById('humedad').innerText = humedad + '%';
     document.getElementById('tension-agua').innerText = tensionAgua + ' kPa';
     document.getElementById('actividad-microbiana').innerText = actividadMicrobiana;
     document.getElementById('perdida-agua').innerText = perdidaAgua + '%';
 
     updateCardColor(document.getElementById('estado-cultivo-icon'), estadoCultivo, { low: 33, high: 66 });
-    updateCardColor(document.getElementById('temperatura-icon'), temperatura, { low: 15, high: 30 });
-    updateCardColor(document.getElementById('humedad-icon'), humedad, { low: 33, high: 66 });
     updateCardColor(document.getElementById('tension-agua-icon'), tensionAgua, { low: 33, high: 66 });
     updateCardColor(document.getElementById('actividad-microbiana-icon'), actividadMicrobiana === 'Alta' ? 100 : 0, { low: 50, high: 100 });
     updateCardColor(document.getElementById('perdida-agua-icon'), perdidaAgua, { low: 33, high: 66 });
