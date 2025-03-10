@@ -5,10 +5,10 @@ Tecnoterra es una plataforma innovadora dedicada al monitoreo, control y supervi
 
 **Enlace del video:**[Ver Video de Tecnoterra](https://youtu.be/-2Ana_1J7gs)
 
-![Para crear usuario](./Tecnoterra/Public/Imagenes/crear_usuario.jpeg)
-![Menú de la lectura del sensor](./Tecnoterra/Public/Imagenes/menu.jpeg)
-![Nombre de la página](./Tecnoterra/Public/Imagenes/nombre.png)
-![Pedir los datos personales](./Tecnoterra/Public/Imagenes/usuario_datos_personales.jpeg)
+![Para crear usuario](./Public/Imagenes/crear_usuario.jpeg)
+![Menú de la lectura del sensor](./Public/Imagenes/menu.jpeg)
+![Nombre de la página](./Public/Imagenes/nombre.png)
+![Pedir los datos personales](./Public/Imagenes/usuario_datos_personales.jpeg)
 
 ## Objetivo
 El objetivo principal de Tecnoterra es mejorar la eficiencia y productividad en la agricultura, proporcionando a los agricultores herramientas tecnológicas que les permitan supervisar y gestionar sus cultivos de manera efectiva. Con Tecnoterra, buscamos reducir el desperdicio de recursos, aumentar los rendimientos y fomentar prácticas agrícolas sostenibles, contribuyendo al bienestar de los agricultores y a la seguridad alimentaria global.
